@@ -1,0 +1,10 @@
+@media screen and (max-width:1344px) {
+    .hero-container {
+        max-width: 800px;
+    }
+    .hero-container-inner {
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+}
