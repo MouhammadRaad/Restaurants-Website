@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: "Rubik", sans-serif;
+  }
+
+  .header  {
+    height: 100vh;
+    position: relative;
+
+    background-image: linear-gradient(
+        rgba(34, 34, 34, 0.6),
+        rgba(34, 34, 34, 0.6)
+      ),
+      url(/assets/hero.jpg);
+    background-size: cover;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fdf2e9;
+    height: 10vh;
+    padding: 0 80px;
+    position: relative;
+  }
+  
+  .logo {
+    height: 2.2rem;
+  }
+    
+  .main-nav-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
+  
+  .main-nav-link:link,
+  .main-nav-link:visited {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 18px;
+    transition: all 0.3s;
+  }
+  
+  .main-nav-link:hover,
+  .main-nav-link:active {
+    color: #cf711f;
+  }
+  
+  .main-nav-link.nav-login:link,
+  .main-nav-link.nav-login:visited {
+    padding: 12px 52px;
+    border-radius: 9px;
+    color: #fff;
+    background-color: #e67e22;
+  }
+  
+  .main-nav-link.nav-login:hover,
+  .main-nav-link.nav-login:active {
+    background-color: #cf711f;
+  }
+
+  .hero-container {
+    width: 1200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero-container-inner {
+    width: 50%;
+  }
+
+  .hero-container-inner h1 {
+    font-size: 52px;
+    margin-bottom: 32px;
+    line-height: 1.05;
+  }
+
+  .hero-container-inner p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
