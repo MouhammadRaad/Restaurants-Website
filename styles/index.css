@@ -9,10 +9,17 @@ body {
     font-family: "Rubik", sans-serif;
 }
 
+a, li {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
 .header {
     height: 100vh;
     position: relative;
-
     background-image: linear-gradient(rgba(34, 34, 34, 0.6),
             rgba(34, 34, 34, 0.6)),
         url(/assets/hero.jpg);
@@ -20,24 +27,28 @@ body {
 }
 
 .navbar {
-    background-color: #f7f7f7e0;
-    height: 10vh;
+    height: 100px;
     padding: 0 80px;
 }
 
-.logo {
-    height: 2.2rem;
+.navbar-collapse {
+    animation: none;
 }
 
-.main-nav-list {
+.logo {
+    height: 32px;
+    cursor: pointer;
+}
+
+.nav-list {
     list-style: none;
     align-items: center;
     gap: 80px;
     margin: 0;
 }
 
-.main-nav-link:link,
-.main-nav-link:visited {
+.nav-link:link,
+.nav-link:visited {
     display: inline-block;
     text-decoration: none;
     color: #333;
@@ -46,22 +57,62 @@ body {
     transition: all 0.3s;
 }
 
-.main-nav-link:hover,
-.main-nav-link:active {
+.nav-link:hover,
+.nav-link:active {
     color: #cf711f;
 }
 
-.main-nav-link.nav-login:link,
-.main-nav-link.nav-login:visited {
+.nav-link.nav-login:link,
+.nav-link.nav-login:visited {
     padding: 12px 52px;
     border-radius: 9px;
     color: #fff;
     background-color: #e67e22;
 }
 
-.main-nav-link.nav-login:hover,
-.main-nav-link.nav-login:active {
+.nav-link.nav-login:hover,
+.nav-link.nav-login:active {
     background-color: #cf711f;
+}
+
+.toggler {
+    cursor: pointer;
+    scale: 1.5;
+    display: none;
+}
+
+.toggler-header {
+    text-align: left;
+    width: 100%;
+    padding: 0 32px 32px 32px;
+    position: absolute;
+    top: 100px;
+    left: 0;
+}
+
+.toggler-links {
+    margin: 0;
+    padding: 0;
+}
+
+.toggler-links li {
+    padding: 16px;
+}
+
+.toggler-links li:hover {
+    background-color: rgba(197, 197, 197, 0.178);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.toggler-header li:last-child a {
+    border-radius: 24px;
+    padding: 12px 32px;
+}
+
+.toggler-header li:not(:last-child) a {
+    color: #333;
+    padding: 12px 16px;
 }
 
 .hero-container {
@@ -94,19 +145,21 @@ body {
     max-width: 40%;
 }
 
-.container {
-    margin: 0 auto;
-    width: 1200px;
-}
 
 .explore {
     padding: 96px 0;
-    background-color: #f7f7f7;
+    flex-direction: column;
+    gap: 64px;
+}
+
+.explore-container-text {
+    margin: 0 auto;
+    width: 80%;
 }
 
 .explore h2 {
     font-size: 44px;
-    margin-bottom: 12x;
+    margin: 0;
 }
 
 .explore p {
@@ -115,7 +168,57 @@ body {
     margin: 0;
 }
 
-.grid {
+.explore a {
+    text-decoration: none;
+}
+
+.explore-container-search {
+    gap: 16px;
+    width: 60%;
+}
+
+.explore-inner-container-search {
+    width: 100%;
+}
+
+.explore-search {
+    width: 80%;
+}
+
+.explore-search input {
+    width: 100%;
+    border: 1px solid #c9c9c9;
+    border-radius: 12px;
+    padding: 0 12px;
+}
+
+.explore-filter-toggler-links {
+
+    width: 80%;
+}
+
+.explore-filter-toggler-links p {
+    font-size: 16px;
+    max-width: 30%;
+}
+
+.filter-links {
+    gap: 16px;
+    margin: 0;
+    padding-left: 16px;
+}
+
+.filter-link:hover {
+    cursor: pointer;
+    color: #c9c9c9;
+}
+
+
+.explore-filter {
+    gap: 8px;
+}
+
+.cards-grid {
     max-width: 1200px;
     margin: 32px auto;
 }
@@ -140,37 +243,10 @@ body {
     margin: 0;
 }
 
-/* .guide-imgs-row img, .guide-imgs-col img {
-    max-width: auto;
-    max-height: 100%;
-    object-fit: cover;
-} */
-
-/* .guide-imgs-row .img {
-    border: 5px solid black;
-    height: 500px;
+footer {
+    padding: 0 32px;
 }
 
-.guide-imgs-row .img:first-child {
-    width: 40%;
+.hidden {
+    display: none;
 }
-
-.guide-imgs-row .img:nth-child(2) {
-    width: 20%;
-}
-
-.guide-imgs-col .img:first-child {
-    height: 40%;
-    width: auto;
-}
-
-.guide-imgs-col .img:nth-child(2) {
-    height: 40%;
-}
-
-.guide-imgs-col .img {
-    border: 5px solid black;
-    max-width: 25%;
-    height: 400px;
-} */
-
