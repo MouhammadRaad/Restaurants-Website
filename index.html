@@ -25,9 +25,9 @@
             </a>
             <nav class="main-nav">
                 <ul class="nav-list flex center">
-                    <li><a class="nav-link" href="#">Restaurants</a></li>
-                    <li><a class="nav-link" href="#">Profile</a></li>
-                    <li><a class="nav-link nav-login" href="#">Sign In</a></li>
+                    <li><a id="scroll-btn" class="nav-link" href="#">Restaurants</a></li>
+                    <li><a id="nav-link-profile" class="nav-link" href="#">Profile</a></li>
+                    <li><a id="login-btn" class="nav-link nav-login" href="/pages/sign-in.html">Sign In</a></li>
                 </ul>
             </nav>
             <div class="toggler white-text">
@@ -36,8 +36,8 @@
             <div class="toggler-header hidden off-white-bg" id="toggler-header">
                 <ul class="toggler-links">
                     <li><a class="toggler-link">Restaurants</a></li>
-                    <li><a class="toggler-link">Profile</a></li>
-                    <li><a class="toggler-link off-white-text primary-bg">Sign In</a></li>
+                    <li><a id="nav-link-profile-collapsed" class="toggler-link">Profile</a></li>
+                    <li><a id="login-btn-collapsed" class="toggler-link off-white-text primary-bg" href="/pages/sign-in.html">Sign In</a></li>
                 </ul>
             </div>
         </section>
@@ -57,9 +57,9 @@
         </section>
     </header>
     <main>
-        <section class="explore flex center light-gray-bg">
+        <section class="explore flex center light-gray-bg" id="scroll-target">
             <div class="explore-container-text">
-                <h2>Book top restaurants nearby</h2>
+                <h2>Top dining options nearby</h2>
                 <p>
                     From cozy cafes to fine dining experiences, our curated selection ensures there's something for
                     every palate. Plan your dining adventures effortlessly and embark on a journey of gastronomic
@@ -68,54 +68,27 @@
             </div>
             <div class="explore-container-search flex column center">
                 <div class="explore-container-search flex center">
+                    <div class="explore-admin">
+                        <i class="hidden fa-solid fa-plus" id="add-restaurant"></i>
+                    </div>
                     <div class="explore-search">
-                        <input type="text" placeholder="Search...">
+                        <input type="text" placeholder="Search..." id="search">
                     </div>
                     <div class="explore-filter flex center">
-                        <a href="" class="dark-gray-text">Filter</a>
-                        <i class="fa-solid fa-bars"></i>
+                        <a class="dark-gray-text">Filter</a>
+                        <i class="filter-toggle fa-solid fa-bars" id="toggle-filters"></i>
                     </div>
                 </div>
-                <div class="explore-filter-toggler-links flex center">
+                <div class="explore-filter-toggler-links hidden center" id="filter-toggler-links">
                     <p>Location: </p>
-                    <ul class="filter-links flex center">
-                        <li class="filter-link">Restaurants</li>
-                        <li class="filter-link">Restaurants</li>
-                        <li class="filter-link">Restaurants</li>
-                    </ul>
+                    <ul class="filter-links flex center" id="filter-links"></ul>
+                    <div class="explore-filter-fav" id="fav-filter-container"></div>
                 </div>
-
             </div>
 
         </section>
         <section class="cards-grid">
-            <div class="cards flex center wrap" id="cards-container">
-                <div class="card flex center box-shadow">
-                    <img src="/assets/card-img.jpg" alt="restaurant-img">
-                    <p>Paloma, Gemmayzeh - Beirut</p>
-                </div>
-                <div class="card flex center box-shadow">
-                    <img src="/assets/card-img.jpg" alt="restaurant-img">
-                    <p>Paloma, Gemmayzeh - Beirut</p>
-                </div>
-                <div class="card flex center box-shadow">
-                    <img src="/assets/card-img.jpg" alt="restaurant-img">
-                    <p>Paloma, Gemmayzeh - Beirut</p>
-                </div>
-                <div class="card flex center box-shadow">
-                    <img src="/assets/card-img.jpg" alt="restaurant-img">
-                    <p>Paloma, Gemmayzeh - Beirut</p>
-                </div>
-                <div class="card flex center box-shadow">
-                    <img src="/assets/card-img.jpg" alt="restaurant-img">
-                    <p>Paloma, Gemmayzeh - Beirut</p>
-                </div>
-                <div class="card flex center box-shadow">
-                    <img src="/assets/card-img.jpg" alt="restaurant-img">
-                    <p>Paloma, Gemmayzeh - Beirut</p>
-                </div>
-            </div>
-
+            <div class="cards flex center wrap" id="cards-container"></div>
             </div>
         </section>
         <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">

@@ -9,7 +9,8 @@ body {
     font-family: "Rubik", sans-serif;
 }
 
-a, li {
+a,
+li {
     text-decoration: none;
 }
 
@@ -62,17 +63,24 @@ ul {
     color: #cf711f;
 }
 
-.nav-link.nav-login:link,
-.nav-link.nav-login:visited {
+.nav-login:link,
+.nav-login:visited {
     padding: 12px 52px;
     border-radius: 9px;
     color: #fff;
     background-color: #e67e22;
 }
 
-.nav-link.nav-login:hover,
-.nav-link.nav-login:active {
+.nav-login:hover,
+.nav-login:active {
     background-color: #cf711f;
+}
+
+.nav-login-secondary {
+    padding: 12px 52px;
+    border-radius: 9px;
+    background-color: none;
+    border: 2px solid #e67e22;
 }
 
 .toggler {
@@ -193,7 +201,7 @@ ul {
 }
 
 .explore-filter-toggler-links {
-
+    display: flex;
     width: 80%;
 }
 
@@ -213,25 +221,52 @@ ul {
     color: #c9c9c9;
 }
 
+.toggled {
+    color: #e67e22;
+}
 
 .explore-filter {
     gap: 8px;
 }
 
+.explore-filter-fav {
+    margin-left: 32px;
+}
+
+.filter-toggle:hover,
+.fa-star:hover:hover,
+.fa-square-minus:hover,
+.fa-plus:hover {
+    cursor: pointer;
+    color: #c9c9c9;
+}
+
 .cards-grid {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 32px auto;
 }
 
 .cards {
+    width: 100%;
+    min-height: 50vh;
     gap: 32px
 }
 
 .card {
-    max-width: 350px;
+    max-width: 400px;
     height: 100%;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.card:hover {
+    cursor: pointer;
+    box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.2);
+    transform: translatey(-1%);
+}
+
+.card-footer {
+    background-color: unset;
 }
 
 .card img {
@@ -239,8 +274,22 @@ ul {
 }
 
 .card p {
-    padding: 16px;
+    font-size: 20px;
+    padding: 12px;
     margin: 0;
+}
+
+.card-footer {
+    gap: 8px;
+}
+
+.cards-not-found {
+    height: 50vh;
+    text-align: center;
+}
+
+.cards-not-found h2 {
+    font-weight: 400;
 }
 
 footer {
