@@ -25,9 +25,9 @@
             </a>
             <nav class="main-nav">
                 <ul class="nav-list flex center">
-                    <li><a class="nav-link" href="#">Restaurants</a></li>
-                    <li><a class="nav-link" href="#">Profile</a></li>
-                    <li><a class="nav-link nav-login" href="#">Sign In</a></li>
+                    <li><a id="scroll-btn" class="nav-link" href="#">Restaurants</a></li>
+                    <li><a id="nav-link-profile" class="nav-link" href="#">Profile</a></li>
+                    <li><a id="login-btn" class="nav-link nav-login" href="/pages/sign-in.html">Sign In</a></li>
                 </ul>
             </nav>
             <div class="toggler white-text">
@@ -36,8 +36,8 @@
             <div class="toggler-header hidden off-white-bg" id="toggler-header">
                 <ul class="toggler-links">
                     <li><a class="toggler-link">Restaurants</a></li>
-                    <li><a class="toggler-link">Profile</a></li>
-                    <li><a class="toggler-link off-white-text primary-bg">Sign In</a></li>
+                    <li><a id="nav-link-profile-collapsed" class="toggler-link">Profile</a></li>
+                    <li><a id="login-btn-collapsed" class="toggler-link off-white-text primary-bg" href="/pages/sign-in.html">Sign In</a></li>
                 </ul>
             </div>
         </section>
@@ -57,9 +57,9 @@
         </section>
     </header>
     <main>
-        <section class="explore flex center light-gray-bg">
+        <section class="explore flex center light-gray-bg" id="scroll-target">
             <div class="explore-container-text">
-                <h2>Book top restaurants nearby</h2>
+                <h2>Top dining options nearby</h2>
                 <p>
                     From cozy cafes to fine dining experiences, our curated selection ensures there's something for
                     every palate. Plan your dining adventures effortlessly and embark on a journey of gastronomic
