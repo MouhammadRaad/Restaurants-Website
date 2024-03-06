@@ -1,25 +1,43 @@
 const toggler = document.querySelector('.toggler-open');
 const togglerHeader = document.getElementById('toggler-header');
-const loginForm = getElementById('login-form');
-const usernameInput = document.getElementById('username').value;
-const passwordInput = document.getElementById('password').value;
+
 const searchInput = document.getElementById('search').value;
-const filtersContainer = document.getElementById('filter-links');
+
+const filtersToggler = document.getElementById('toggle-filters');
+const filtersContainer = document.getElementById('filter-toggler-links');
+const locationFiltersContainer = document.getElementById('filter-links');
+const favoriteFilterContainer = document.getElementById('fav-filter-container');
+
+const adminAddBtn = document.getElementById('add-restaurant');
+
+
+
+// const loginForm = getElementById('login-form');
+// const usernameInput = document.getElementById('username').value;
+// const passwordInput = document.getElementById('password').value;
+
 
 const cardsContainer = document.getElementById('cards-container');
 
-let filter = document.getElementById('filter-link')
+let addToFavoritesBtns = [];
+let adminDeleteBtns = [];
+let locationFiltersFound = document.querySelectorAll('.filter-link');
+let locationFiltersApplied = false;
+let favoriteFilterFound = '';
+let favoriteFilterApllied = false;
+
+
 
 const restaurant = {
     name: '',
     location: '',
-    favorite: false
 }
 
 const user = {
     username: 'user',
     password: 'user',
-    isAdmin: false
+    isAdmin: false,
+    favoriteRestaurants: ['Cedar Grill', 'Seaside Cafe'],
 }
 
 const admin = {
@@ -31,12 +49,12 @@ const admin = {
 const users = [user, admin]
 
 const restaurants = [
-    { name: 'Cedar Grill', location: 'Beirut', favorite: false },
-    { name: 'Byblos Bistro', location: 'Byblos', favorite: false },
-    { name: 'Olive Garden', location: 'Beirut', favorite: false },
-    { name: 'Seaside Cafe', location: 'Byblos', favorite: false },
-    { name: 'Golden Falafel', location: 'Beirut', favorite: false },
-    { name: 'Harbor House', location: 'Byblos', favorite: false }
+    { name: 'Cedar Grill', location: 'Beirut' },
+    { name: 'Byblos Bistro', location: 'Byblos' },
+    { name: 'Olive Garden', location: 'Beirut' },
+    { name: 'Seaside Cafe', location: 'Byblos' },
+    { name: 'Golden Falafel', location: 'Beirut' },
+    { name: 'Harbor House', location: 'Byblos' }
 ];
 
 
@@ -51,7 +69,7 @@ const login = (usernameInput, passwordInput) => {
 }
 
 const search = (searchInput) => {
-    const searchInput = searchInput.trim().toLowerCase();
+    searchInput = searchInput.trim().toLowerCase();
     const searchResults = [];
 
     for (let i = 0; i < restaurants.length; i++) {
@@ -64,7 +82,7 @@ const search = (searchInput) => {
 }
 
 const populateLocationFilters = () => {
-    filtersContainer.innerHTML += '';
+    locationFiltersContainer.innerHTML += '';
     const uniqueLocations = {};
     for (let i = 0; i < restaurants.length; i++) {
         uniqueLocations[restaurants[i].location] = true;
@@ -75,7 +93,7 @@ const populateLocationFilters = () => {
     }
 
     for (let i = 0; i < uniqueLocationsArray.length; i++) {
-        filtersContainer.innerHTML += `<li class="filter-link">${uniqueLocationsArray[i]}</li>`;
+        locationFiltersContainer.innerHTML += `<li class="filter-link">${uniqueLocationsArray[i]}</li>`;
     }
 }
 
@@ -86,20 +104,89 @@ const applySelectedLocationFilter = (selectedFilter) => {
     populateRestaurantsCards(filterResult);
 }
 
-function populateRestaurantCard(restaurant) {
-    cardsContainer.innerHTML = `<div class="card flex center box-shadow">
-        <img src="/assets/restaurant-${restaurant.name}.jpg" alt="restaurant-img">
-        <p>${restaurant.location}</p></div>`;
-}
-
-function populateRestaurantsCards(restaurants) {
-    for (let i = 0; i < restaurants.length; i++) {
-        populateRestaurantCard(restaurants[i])
+const populateFavoriteFilter = () => {
+    if (user.favoriteRestaurants.length > 0) {
+        favoriteFilterContainer.innerHTML = `<i class="fa-regular fa-star" id="fav-filter"></i>`;
+        favoriteFilterFound = document.getElementById('fav-filter');
+    }
+    else {
+        favoriteFilterContainer.innerHTML = '';
     }
 }
 
+const applyFavoriteFilter = () => {
+    if (!favoriteFilterApllied) {
+        const favoriteFilterResult = restaurants.filter(restaurant => user.favoriteRestaurants.includes(restaurant.name));
+        populateRestaurantsCards(favoriteFilterResult);
+    }
+    else {
+        populateRestaurantsCards(restaurants);
+    }
+    favoriteFilterApllied = !favoriteFilterApllied;
+}
+
+const addOrRemoveToFavorites = (restaurantName) => {
+    if (!user.favoriteRestaurants.includes(restaurantName)) {
+        user.favoriteRestaurants.push(restaurantName);
+    }
+    else {
+        user.favoriteRestaurants = user.favoriteRestaurants.filter(restaurant => restaurant.name != restaurantName)
+    }
+}
+
+const getCardClicked = () => {
+
+}
+
+function populateRestaurantCard(restaurant) {
+    cardsContainer.innerHTML += `<div class="card flex center box-shadow off-white-bg">
+                                <img src="/assets/card-img.jpg" alt="restaurant-img">
+                                <div class="card-footer flex center space-between off-white-bg">
+                                    <p>${restaurant.name} - ${restaurant.location}</p>
+                                    <i class="remove-restaurant fa-regular hidden fa-square-minus"></i>
+                                    <i class="add-to-favorites fa-regular fa-star"></i>
+                                </div>
+                                </div>`;
+}
+
+function populateRestaurantsCards(restaurants) {
+    cardsContainer.innerHTML = '';
+    for (let i = 0; i < restaurants.length; i++) {
+        populateRestaurantCard(restaurants[i])
+    }
+
+    addToFavoritesBtns = document.querySelectorAll('.add-to-favorites');
+    adminDeleteBtns = document.querySelectorAll('.remove-restaurant');
+}
+
+populateRestaurantsCards(restaurants);
+populateLocationFilters();
+populateFavoriteFilter();
+
+// Show filters on filter toggler click
+filtersToggler.addEventListener('click', () => {
+    filtersContainer.classList.toggle('hidden');
+})
+
+// Navbar toggler style on click
 toggler.addEventListener('click', () => {
     toggler.classList.toggle('fa-bars');
     toggler.classList.toggle('fa-xmark');
     togglerHeader.classList.toggle('hidden');
 })
+
+// Toggling favorite filter and changing button style
+favoriteFilterFound && favoriteFilterFound.addEventListener('click', () => {
+    favoriteFilterFound.classList.toggle('fa-regular');
+    favoriteFilterFound.classList.toggle('fa-solid');
+    applyFavoriteFilter();
+})
+
+console.log(addToFavoritesBtns);
+// addToFavoritesBtns.addEventListener('click', () => {
+//     console.log('adding to favorites');
+//     const parentCard = this.closest('.card');
+//     const restaurantName = parentCard.querySelector('.p').textContent.split(' - ')[0];
+//     addOrRemoveToFavorites(restaurantName);
+//     console.log(user.favoriteRestaurants)
+// })`
