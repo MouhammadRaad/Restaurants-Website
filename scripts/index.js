@@ -1,7 +1,7 @@
 const toggler = document.querySelector('.toggler-open');
 const togglerHeader = document.getElementById('toggler-header');
 
-const searchInput = document.getElementById('search').value;
+const searchInput = document.getElementById('search');
 
 const filtersToggler = document.getElementById('toggle-filters');
 const filtersContainer = document.getElementById('filter-toggler-links');
@@ -21,10 +21,10 @@ const cardsContainer = document.getElementById('cards-container');
 
 let addToFavoritesBtns = [];
 let adminDeleteBtns = [];
-let locationFiltersFound = document.querySelectorAll('.filter-link');
-let locationFiltersApplied = false;
+let locationFiltersFound = [];
+let locationFilterApplied = null;
 let favoriteFilterFound = '';
-let favoriteFilterApllied = false;
+let favoriteFilterApplied = false;
 
 
 
@@ -58,31 +58,32 @@ const restaurants = [
 ];
 
 
-const login = (usernameInput, passwordInput) => {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].username === usernameInput &&
-            users[i].password === passwordInput) {
-            user[i].isAdmin ? window.location.href('/pages/admin-panel.html') : window.location.href('/index.html')
-        }
-        return;
-    }
+const populateRestaurantCard = (restaurant) => {
+    const isFavorite = user.favoriteRestaurants.includes(restaurant.name);
+    const favoriteIconClass = isFavorite ? 'fa-solid' : 'fa-regular'
+
+    cardsContainer.innerHTML += `<div class="card flex center box-shadow off-white-bg">
+                                <img src="/assets/card-img.jpg" alt="restaurant-img">
+                                <div class="card-footer flex center space-between off-white-bg">
+                                    <p class="card-text">${restaurant.name} - ${restaurant.location}</p>
+                                    <i class="remove-restaurant fa-regular hidden fa-square-minus"></i>
+                                    <i class="add-to-favorites ${favoriteIconClass} fa-star"></i>
+                                </div>
+                                </div>`;
 }
 
-const search = (searchInput) => {
-    searchInput = searchInput.trim().toLowerCase();
-    const searchResults = [];
-
+const populateRestaurantsCards = (restaurants) => {
+    cardsContainer.innerHTML = '';
     for (let i = 0; i < restaurants.length; i++) {
-        let restaurantName = restaurants[i].toLowerCase();
-        if (restaurantName.includes(searchInput)) {
-            searchResults.push(restaurants[i])
-        }
+        populateRestaurantCard(restaurants[i])
     }
-    return searchResults
+
+    addToFavoritesBtns = document.querySelectorAll('.add-to-favorites');
+    adminDeleteBtns = document.querySelectorAll('.remove-restaurant');
 }
 
 const populateLocationFilters = () => {
-    locationFiltersContainer.innerHTML += '';
+    locationFiltersContainer.innerHTML = '';
     const uniqueLocations = {};
     for (let i = 0; i < restaurants.length; i++) {
         uniqueLocations[restaurants[i].location] = true;
@@ -95,13 +96,7 @@ const populateLocationFilters = () => {
     for (let i = 0; i < uniqueLocationsArray.length; i++) {
         locationFiltersContainer.innerHTML += `<li class="filter-link">${uniqueLocationsArray[i]}</li>`;
     }
-}
-
-const getSelectedLocationFilter = (filterElement) => filterElement.textContent;
-
-const applySelectedLocationFilter = (selectedFilter) => {
-    const filterResult = restaurants.filter(restaurant => restaurant.location == selectedFilter);
-    populateRestaurantsCards(filterResult);
+    locationFiltersFound = document.querySelectorAll('.filter-link')
 }
 
 const populateFavoriteFilter = () => {
@@ -114,15 +109,81 @@ const populateFavoriteFilter = () => {
     }
 }
 
-const applyFavoriteFilter = () => {
-    if (!favoriteFilterApllied) {
-        const favoriteFilterResult = restaurants.filter(restaurant => user.favoriteRestaurants.includes(restaurant.name));
-        populateRestaurantsCards(favoriteFilterResult);
+
+// const applySelectedLocationFilter = (selectedFilter) => {
+//     if (selectedFilter != locationFilterApplied) {
+//         const filterResult = restaurants.filter(restaurant => restaurant.location == selectedFilter);
+//         populateRestaurantsCards(filterResult);
+//         locationFilterApplied = selectedFilter;
+//     }
+//     else {
+//         populateRestaurantsCards(restaurants);
+//     }
+// }
+
+
+
+// const applyFavoriteFilter = () => {
+//     if (!favoriteFilterApplied) {
+//         const favoriteFilterResult = restaurants.filter(restaurant => user.favoriteRestaurants.includes(restaurant.name));
+//         populateRestaurantsCards(favoriteFilterResult);
+//     }
+//     else {
+//         populateRestaurantsCards(restaurants);
+//     }
+//     favoriteFilterApplied = !favoriteFilterApplied;
+// }
+
+const login = (usernameInput, passwordInput) => {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].username === usernameInput &&
+            users[i].password === passwordInput) {
+            user[i].isAdmin ? window.location.href('/pages/admin-panel.html') : window.location.href('/index.html')
+        }
+        return;
     }
-    else {
-        populateRestaurantsCards(restaurants);
+}
+const getSelectedLocationFilter = (filterElement) => filterElement.textContent;
+
+const applyFilters = () => {
+    let filterResult = restaurants;
+
+    if (locationFilterApplied) {
+        filterResult = restaurants.filter(restaurant => restaurant.location === locationFilterApplied);
     }
-    favoriteFilterApllied = !favoriteFilterApllied;
+
+    if (favoriteFilterApplied) {
+        filterResult = filterResult.filter(restaurant => user.favoriteRestaurants.includes(restaurant.name));
+    }
+
+    populateRestaurantsCards(filterResult);
+}
+
+const setLocationFilter = (selectedFilter) => {
+    if (selectedFilter != locationFilterApplied) {
+        locationFilterApplied = selectedFilter
+    } else {
+        locationFilterApplied = null;
+    }
+    applyFilters();
+}
+
+const setFavoriteFilter = () => {
+    favoriteFilterApplied = !favoriteFilterApplied;
+    applyFilters();
+}
+
+const search = (searchInput) => {
+    searchInput = searchInput.trim().toLowerCase();
+    const searchResults = [];
+
+    for (let i = 0; i < restaurants.length; i++) {
+        let restaurantName = restaurants[i].name.toLowerCase();
+        if (restaurantName.includes(searchInput)) {
+            searchResults.push(restaurants[i])
+        }
+    }
+    return searchResults
 }
 
 const addOrRemoveToFavorites = (restaurantName) => {
@@ -130,33 +191,9 @@ const addOrRemoveToFavorites = (restaurantName) => {
         user.favoriteRestaurants.push(restaurantName);
     }
     else {
-        user.favoriteRestaurants = user.favoriteRestaurants.filter(restaurant => restaurant.name != restaurantName)
+        user.favoriteRestaurants = user.favoriteRestaurants.filter(name => name != restaurantName)
     }
-}
-
-const getCardClicked = () => {
-
-}
-
-function populateRestaurantCard(restaurant) {
-    cardsContainer.innerHTML += `<div class="card flex center box-shadow off-white-bg">
-                                <img src="/assets/card-img.jpg" alt="restaurant-img">
-                                <div class="card-footer flex center space-between off-white-bg">
-                                    <p>${restaurant.name} - ${restaurant.location}</p>
-                                    <i class="remove-restaurant fa-regular hidden fa-square-minus"></i>
-                                    <i class="add-to-favorites fa-regular fa-star"></i>
-                                </div>
-                                </div>`;
-}
-
-function populateRestaurantsCards(restaurants) {
-    cardsContainer.innerHTML = '';
-    for (let i = 0; i < restaurants.length; i++) {
-        populateRestaurantCard(restaurants[i])
-    }
-
-    addToFavoritesBtns = document.querySelectorAll('.add-to-favorites');
-    adminDeleteBtns = document.querySelectorAll('.remove-restaurant');
+    console.log(user.favoriteRestaurants)
 }
 
 populateRestaurantsCards(restaurants);
@@ -175,18 +212,46 @@ toggler.addEventListener('click', () => {
     togglerHeader.classList.toggle('hidden');
 })
 
-// Toggling favorite filter and changing button style
+//Toggling favorite filter and changing button style
 favoriteFilterFound && favoriteFilterFound.addEventListener('click', () => {
     favoriteFilterFound.classList.toggle('fa-regular');
     favoriteFilterFound.classList.toggle('fa-solid');
-    applyFavoriteFilter();
+    setFavoriteFilter();
 })
 
-console.log(addToFavoritesBtns);
-// addToFavoritesBtns.addEventListener('click', () => {
-//     console.log('adding to favorites');
-//     const parentCard = this.closest('.card');
-//     const restaurantName = parentCard.querySelector('.p').textContent.split(' - ')[0];
-//     addOrRemoveToFavorites(restaurantName);
-//     console.log(user.favoriteRestaurants)
-// })`
+//Adding removing from favorites
+for (let i = 0; i < addToFavoritesBtns.length; i++) {
+    addToFavoritesBtns[i].addEventListener('click', () => {
+        addToFavoritesBtns[i].classList.toggle('fa-regular');
+        addToFavoritesBtns[i].classList.toggle('fa-solid');
+        const parentCard = addToFavoritesBtns[i].closest('.card');
+        const restaurantNameElement = parentCard.querySelector('.card-text')
+        const restaurantName = restaurantNameElement.textContent.split(' - ')[0];
+        addOrRemoveToFavorites(restaurantName);
+    })
+}
+
+//Toggling Location Filters
+for (let i = 0; i < locationFiltersFound.length; i++) {
+    locationFiltersFound[i].addEventListener('click', () => {
+        let locationFilterApplied = getSelectedLocationFilter(locationFiltersFound[i]);
+        setLocationFilter(locationFilterApplied);
+    })
+}
+
+//Searching
+searchInput.addEventListener('input', (event) => {
+    const searchInputValue = event.target.value;
+    const restaurantsFound = search(searchInputValue);
+    if (restaurantsFound.length > 0) {
+        populateRestaurantsCards(restaurantsFound)
+    }
+    else {
+        cardsContainer.innerHTML = `<div class="cards-not-found flex column center">
+                                        <h2>Nothing matches...</h2>
+                                    </div>`
+    }
+})
+
+
+console.log(locationFiltersFound)

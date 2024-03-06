@@ -236,6 +236,7 @@ ul {
 }
 
 .cards {
+    min-height: 50vh;
     gap: 32px
 }
 
@@ -257,6 +258,15 @@ ul {
 
 .card-footer {
     gap: 8px;
+}
+
+.cards-not-found {
+    height: 50vh;
+    text-align: center;
+}
+
+.cards-not-found h2 {
+    font-weight: 400;
 }
 
 footer {
