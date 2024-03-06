@@ -25,8 +25,8 @@ let currentRestaurants = null;
 let addToFavoritesBtns = [];
 let adminDeleteBtns = [];
 let locationFiltersFound = [];
-let locationFilterApplied = null;
 let favoriteFilterFound = '';
+let selectedLocationFilters = [];
 let favoriteFilterApplied = false;
 let restaurantsCards = [];
 
@@ -279,8 +279,8 @@ const getSelectedLocationFilter = (filterElement) => filterElement.textContent;
 const applyFilters = () => {
     let filterResult = restaurants;
 
-    if (locationFilterApplied) {
-        filterResult = restaurants.filter(restaurant => restaurant.location === locationFilterApplied);
+    if (selectedLocationFilters.length > 0) {
+        filterResult = filterResult.filter(restaurant => selectedLocationFilters.includes(restaurant.location));
     }
 
     if (favoriteFilterApplied) {
@@ -291,11 +291,20 @@ const applyFilters = () => {
 }
 
 const setLocationFilter = (selectedFilter) => {
-    if (selectedFilter != locationFilterApplied) {
-        locationFilterApplied = selectedFilter
-    } else {
-        locationFilterApplied = null;
+    let filterAlreadySelected = false;
+    for (let i = 0; i < selectedLocationFilters.length; i++) {
+        if (selectedLocationFilters[i] === selectedFilter) {
+            filterAlreadySelected = true;
+            break;
+        }
     }
+
+    if (filterAlreadySelected) {
+        selectedLocationFilters = selectedLocationFilters.filter(filter => filter !== selectedFilter);
+    } else {
+        selectedLocationFilters.push(selectedFilter);
+    }
+    
     applyFilters();
 }
 
