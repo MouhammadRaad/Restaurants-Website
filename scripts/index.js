@@ -1,10 +1,14 @@
 const toggler = document.querySelector('.toggler-open');
 const togglerHeader = document.getElementById('toggler-header');
+
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+
 const loginBtn = document.getElementById('login-btn');
 const loginBtnCollapsed = document.getElementById('login-btn-collapsed');
+
 const navbarProfileLink = document.getElementById('nav-link-profile');
 const navbarProfileLinkCollapsed = document.getElementById('nav-link-profile-collapsed');
-
 
 const searchInput = document.getElementById('search');
 const filtersToggler = document.getElementById('toggle-filters');
@@ -13,8 +17,6 @@ const locationFiltersContainer = document.getElementById('filter-links');
 const favoriteFilterContainer = document.getElementById('fav-filter-container');
 
 const adminAddBtn = document.getElementById('add-restaurant');
-
-const loginForm = document.getElementById('login-form');
 
 const cardsContainer = document.getElementById('cards-container');
 
@@ -32,6 +34,7 @@ const user = {
     id: 2,
     username: 'user',
     password: 'user',
+    meal: 'hummus',
     isAdmin: false,
     favoriteRestaurants: ['Cedar Grill', 'Seaside Cafe'],
 }
@@ -40,6 +43,7 @@ const admin = {
     id: 1,
     username: 'admin',
     password: 'admin',
+    meal: 'hummus',
     isAdmin: true,
     favoriteRestaurants: ['Cedar Grill', 'Golden Falafel'],
 }
@@ -47,16 +51,80 @@ const admin = {
 const users = [user, admin]
 
 const restaurants = [
-    { name: 'Cedar Grill', location: 'Beirut' },
-    { name: 'Byblos Bistro', location: 'Byblos' },
-    { name: 'Olive Garden', location: 'Beirut' },
-    { name: 'Seaside Cafe', location: 'Byblos' },
-    { name: 'Golden Falafel', location: 'Beirut' },
-    { name: 'Harbor House', location: 'Byblos' }
+    {
+        id: 1,
+        name: 'Cedar Grill',
+        location: 'Beirut',
+        menu: [
+            { item: 'Grilled Chicken', price: 15 },
+            { item: 'Hummus Plate', price: 10 },
+            { item: 'Falafel Wrap', price: 8 },
+            { item: 'Mediterranean Salad', price: 12 }
+        ]
+    },
+    {
+        id: 2,
+        name: 'Byblos Bistro',
+        location: 'Byblos',
+        menu: [
+            { item: 'Pasta Carbonara', price: 18 },
+            { item: 'Caesar Salad', price: 12 },
+            { item: 'Seafood Paella', price: 25 },
+            { item: 'Beef Burger', price: 16 }
+        ]
+    },
+    {
+        id: 3,
+        name: 'Olive Garden',
+        location: 'Beirut',
+        menu: [
+            { item: 'Margherita Pizza', price: 20 },
+            { item: 'Spaghetti Bolognese', price: 16 },
+            { item: 'Cheeseburger Pizza', price: 22 },
+            { item: 'Greek Gyro', price: 14 }
+        ]
+    },
+    {
+        id: 4,
+        name: 'Seaside Cafe',
+        location: 'Byblos',
+        menu: [
+            { item: 'Fish & Chips', price: 22 },
+            { item: 'Mango Smoothie', price: 8 },
+            { item: 'Shrimp Scampi', price: 28 },
+            { item: 'Vegetable Stir-Fry', price: 16 }
+        ]
+    },
+    {
+        id: 5,
+        name: 'Golden Falafel',
+        location: 'Beirut',
+        menu: [
+            { item: 'Falafel Sandwich', price: 6 },
+            { item: 'Baba Ghanoush', price: 10 },
+            { item: 'Chicken Shawarma', price: 12 },
+            { item: 'Tabbouleh Salad', price: 8 }
+        ]
+    },
+    {
+        id: 6,
+        name: 'Harbor House',
+        location: 'Byblos',
+        menu: [
+            { item: 'Lobster Roll', price: 30 },
+            { item: 'Clam Chowder', price: 14 },
+            { item: 'Grilled Salmon', price: 26 },
+            { item: 'Crab Cakes', price: 18 }
+        ]
+    }
 ];
 
 const loadCurrentUser = () => {
+    currentUser = null;
     currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) {
+        return
+    }
     console.log('current in home', currentUser);
 
     adjustPage();
@@ -67,7 +135,7 @@ const saveCurrentUser = (user) => {
 }
 
 const saveRestaurants = (restaurants) => {
-    localStorage.setItem('restaurants', json.stringify(restaurants));
+    localStorage.setItem('restaurants', JSON.stringify(restaurants));
 }
 
 const loadRestaurants = () => {
@@ -75,19 +143,69 @@ const loadRestaurants = () => {
 }
 
 const login = (usernameInput, passwordInput) => {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].username === usernameInput &&
-            users[i].password === passwordInput) {
-            saveCurrentUser(users[i]);
+    const storedUsers = JSON.parse(localStorage.getItem('users')) || users
+    console.log(storedUsers)
+    for (let i = 0; i < storedUsers.length; i++) {
+        if (storedUsers[i].username === usernameInput &&
+            storedUsers[i].password === passwordInput) {
+            saveCurrentUser(storedUsers[i]);
             window.location.href = '/index.html';
             return;
         }
     }
+    console.error('Invalid username or password.')
+}
+
+const logout = () => {
+    localStorage.removeItem('currentUser');
+    currentUser = null;
+    console.log('current user after login out', currentUser)
+    // window.location.href = '/index.html';
+    console.log('logging out')
+
+}
+
+const getUniqueId = () => {
+    if (users.length === 0) {
+        return 1;
+    }
+    const latestId = users[users.length - 1].id;
+    return latestId + 1
+}
+
+const register = (usernameInput, favoritemealInput, passwordInput) => {
+    const storedUsers = JSON.parse(localStorage.getItem('users')) || users;
+
+    for (let i = 0; i < storedUsers.length; i++) {
+
+        if (storedUsers[i].username === usernameInput) {
+            console.log('username taken');
+            return;
+        }
+    }
+
+    const newUser = {
+        id: getUniqueId(),
+        username: usernameInput,
+        password: passwordInput,
+        favoritemeal: favoritemealInput,
+        isAdmin: false,
+        favoriteRestaurants: []
+    }
+
+    storedUsers.push(newUser);
+    console.log(users)
+    localStorage.setItem('users', JSON.stringify(storedUsers))
+    saveCurrentUser(newUser)
+    window.location.href = '/index.html';
 }
 
 const populateRestaurantCard = (restaurant) => {
-    const isFavorite = currentUser.favoriteRestaurants.includes(restaurant.name);
-    const favoriteIconClass = isFavorite ? 'fa-solid' : 'fa-regular'
+    let favoriteIconClass = 'fa-regular';
+    if (currentUser) {
+        isFavorite = currentUser.favoriteRestaurants.includes(restaurant.name);
+        favoriteIconClass = isFavorite ? 'fa-solid' : 'fa-regular'
+    }
 
     cardsContainer.innerHTML += `<div class="card flex center box-shadow off-white-bg">
                                 <img src="/assets/card-img.jpg" alt="restaurant-img">
@@ -127,7 +245,7 @@ const populateLocationFilters = () => {
 }
 
 const populateFavoriteFilter = () => {
-    if (currentUser.favoriteRestaurants.length > 0) {
+    if (currentUser && currentUser.favoriteRestaurants.length > 0) {
         favoriteFilterContainer.innerHTML = `<i class="fa-regular fa-star" id="fav-filter"></i>`;
         favoriteFilterFound = document.getElementById('fav-filter');
     }
@@ -222,14 +340,14 @@ if (document.title === 'Restaurants Website') {
         loginBtnCollapsed
     ]
 
+    //Logout
     for (let i = 0; i < loginBtns.length; i++) {
         loginBtns[i].addEventListener('click', () => {
-            if (loginBtn.innerHTML.textContent === 'Sign Out') {
-                localStorage.removeItem('currentUser');
-                window.location.href('/index.html');
-                console.log('logging out')
+            if (loginBtn.textContent === 'Sign Out') {
+                console.log('login out')
+                logout();
             } else {
-                window.location.href('/pages/sign-in-test.html')
+                window.location.href = '/pages/sign-in.html'
             }
         })
     }
@@ -313,6 +431,7 @@ if (document.title === 'Restaurants Website') {
         navbarProfileLink,
         navbarProfileLinkCollapsed
     ]
+
     for (let i = 0; i < profileBtns.length; i++) {
         profileBtns[i].addEventListener('click', () => {
             if (currentUser.isAdmin) {
@@ -332,5 +451,15 @@ if (document.title === 'Sign In') {
         const usernameInput = document.getElementById('username').value;
         const passwordInput = document.getElementById('password').value;
         login(usernameInput, passwordInput)
+    })
+}
+
+if (document.title === 'Sign Up') {
+    registerForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const usernameInput = document.getElementById('username').value;
+        const favoriteMealInput = document.getElementById('favoritemeal').value;
+        const passwordInput = document.getElementById('password').value;
+        register(usernameInput, favoriteMealInput, passwordInput);
     })
 }
