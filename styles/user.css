@@ -1,5 +1,4 @@
 .fav-restaurant{
-    overflow-y: scroll;
     margin:10px ;
     flex-grow: 1;
     height: 700px;
@@ -16,7 +15,6 @@
 }
 
 .fav-card{
-    flex-grow: 1;
     justify-content: start;
     transition: 0.3s;
     width: 90%;
@@ -37,12 +35,12 @@
     height:700px;
     max-width: 90%;
     min-width: 40%;
-    box-shadow: 0 2px 5px gray;
+    box-shadow: 0 5px 10px gray;
     border-radius: 30px;
 }
 
 .user-info img{
-    box-shadow: 0 2px 5px gray;
+    box-shadow: 0 5px 10px gray;
     height: 390px;
     width: 390px;
     border-radius: 50%;
@@ -92,4 +90,74 @@ ul {
 .logo {
     height: 32px;
     cursor: pointer;
+}
+
+.nav-list {
+    list-style: none;
+    align-items: center;
+    gap: 80px;
+    margin: 0;
+}
+
+.nav-link:link,
+.nav-link:visited {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.nav-link:hover,
+.nav-link:active {
+    color: #cf711f;
+}
+
+.nav-link.nav-login:link,
+.nav-link.nav-login:visited {
+    padding: 12px 52px;
+    border-radius: 9px;
+    color: #fff;
+    background-color: #e67e22;
+}
+
+.nav-link.nav-login:hover,
+.nav-link.nav-login:active {
+    background-color: #cf711f;
+}
+
+.toggler {
+    cursor: pointer;
+    scale: 1.5;
+    display: none;
+}
+
+.toggler-header {
+    text-align: left;
+    width: 100%;
+    padding: 0 32px 32px 32px;
+    position: absolute;
+    top: 100px;
+    left: 0;
+}
+
+.toggler-links {
+    margin: 0;
+    padding: 0;
+}
+
+.toggler-links li {
+    padding: 16px;
+}
+
+.toggler-links li:hover {
+    background-color: rgba(197, 197, 197, 0.178);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.toggler-header li:last-child a {
+    border-radius: 24px;
+    padding: 12px 32px;
 }

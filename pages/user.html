@@ -15,7 +15,30 @@
     <title>Document</title>
 </head>
 <body>
-    <header></header>
+    <header class="header">
+        <section class="navbar flex space-between off-white-bg">
+            <a href="#">
+                <img class="logo" alt="logo" src="/assets/logo.png" />
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list flex center">
+                    <li><a class="nav-link" href="#">Restaurants</a></li>
+                    <li><a class="nav-link" href="#">Profile</a></li>
+                    <li><a class="nav-link nav-login" href="#">Sign In</a></li>
+                </ul>
+            </nav>
+            <div class="toggler white-text">
+                <i class="toggler-open fa-solid fa-bars"></i>
+            </div>
+            <div class="toggler-header hidden off-white-bg" id="toggler-header">
+                <ul class="toggler-links">
+                    <li><a class="toggler-link">Restaurants</a></li>
+                    <li><a class="toggler-link">Profile</a></li>
+                    <li><a class="toggler-link off-white-text primary-bg">Sign In</a></li>
+                </ul>
+            </div>
+        </section>
+    </header>
     
 
     <main>
@@ -23,34 +46,21 @@
             <div class="user-info flex center column light-gray-bg">
                 <img src="../assets/barcelona.jpg" alt="">
                 <ul class="dark-gray-bg off-white-text">
-                    <li><h3>name:</h3></li>
-                    <li><h3>age:</h3></li>
-                    <li><h3>occupation:</h3></li>
-                    <li><h3>favorite food:</h3></li>    
+                    <li><h3>name: <span id="uname"></span> </h3></li>
+                    <li><h3>ID:<span id="id"></span></h3></li>
+                    <li><h3>age:<span id="uage"></span></h3></li>
+                    <li><h3>favorite food:<span id="fav"></span></h3></li>    
                 </ul>
             </div>
 
-            <div class="fav-restaurant flex center column off-white-bg">
+            <div class="fav-restaurant flex center column off-white-bg" id="fav-res">
                 <h1>FAVORITE RESTAURANTS</h1>
                 <div class="fav-card center dark-gray-bg flex off-white-text">
                     <img src="../assets/card-img.jpg" alt="">
                     <h5>Restaurant Name</h5>
                 </div>
 
-                <div class="fav-card center dark-gray-bg flex off-white-text">
-                    <img src="../assets/card-img.jpg" alt="">
-                    <h5>Restaurant Name</h5>
-                </div>
-
-                <div class="fav-card center dark-gray-bg flex off-white-text">
-                    <img src="../assets/card-img.jpg" alt="">
-                    <h5>Restaurant Name</h5>
-                </div>
-
-                <div class="fav-card center dark-gray-bg flex off-white-text">
-                    <img src="../assets/card-img.jpg" alt="">
-                    <h5>Restaurant Name</h5>
-                </div>
+            
                 
             </div>
         </section>
