@@ -218,7 +218,7 @@ ul {
 
 .filter-link:hover {
     cursor: pointer;
-    color: #c9c9c9;
+    color: #e67e22;
 }
 
 .toggled {
@@ -240,6 +240,7 @@ ul {
     cursor: pointer;
     color: #e67e22;
 }
+
 
 .cards-grid {
     max-width: 1400px;
