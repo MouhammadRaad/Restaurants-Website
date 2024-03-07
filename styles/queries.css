@@ -18,9 +18,11 @@
     .toggler {
         display: flex;
     }
+
     .hero-container {
         max-width: 80%;
     }
+
     .explore {
         padding: 64px 0;
         flex-direction: column;
@@ -35,9 +37,18 @@
     .explore-container-search {
         width: 80%;
     }
+
+    .empty-col {
+        display: none;
+    }
+
+    .empty-col-2 {
+        display: block;
+    }
+
 }
 
-@media screen and (max-width:748px) {
+@media screen and (max-width:850px) {
     .cards-grid {
         width: 100%;
     }
