@@ -218,7 +218,7 @@ ul {
 
 .filter-link:hover {
     cursor: pointer;
-    color: #c9c9c9;
+    color: #e67e22;
 }
 
 .toggled {
@@ -238,8 +238,9 @@ ul {
 .fa-square-minus:hover,
 .fa-plus:hover {
     cursor: pointer;
-    color: #c9c9c9;
+    color: #e67e22;
 }
+
 
 .cards-grid {
     max-width: 1400px;
@@ -279,6 +280,10 @@ ul {
     margin: 0;
 }
 
+.card-text:hover {
+    color: #e67e22;
+}
+
 .card-footer {
     gap: 8px;
 }
@@ -295,6 +300,11 @@ ul {
 footer {
     max-width: 100%;
     padding: 0 32px;
+}
+
+footer a:hover {
+    cursor: pointer;
+    color: #e67e22 !important;
 }
 
 .nav-link a {

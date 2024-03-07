@@ -28,7 +28,7 @@ let locationFiltersFound = [];
 let favoriteFilterFound = '';
 let selectedLocationFilters = [];
 let favoriteFilterApplied = false;
-let restaurantsCards = [];
+let restaurantsCardsText = [];
 
 const user = {
     id: 2,
@@ -54,7 +54,7 @@ const restaurants = [
     {
         id: 1,
         name: 'Cedar Grill',
-        location: 'Beirut',
+        location: 'Zgharta',
         menu: [
             { item: 'Grilled Chicken', price: 15 },
             { item: 'Hummus Plate', price: 10 },
@@ -159,10 +159,6 @@ const login = (usernameInput, passwordInput) => {
 const logout = () => {
     localStorage.removeItem('currentUser');
     currentUser = null;
-    console.log('current user after login out', currentUser)
-    // window.location.href = '/index.html';
-    console.log('logging out')
-
 }
 
 const getUniqueId = () => {
@@ -222,7 +218,7 @@ const populateRestaurantsCards = (restaurants) => {
     for (let i = 0; i < restaurants.length; i++) {
         populateRestaurantCard(restaurants[i])
     }
-    restaurantsCards = document.querySelectorAll('.card');
+    restaurantsCardsText = document.querySelectorAll('.card-text');
     addToFavoritesBtns = document.querySelectorAll('.add-to-favorites');
     adminDeleteBtns = document.querySelectorAll('.remove-restaurant');
 }
@@ -415,27 +411,30 @@ if (document.title === 'Restaurants Website') {
         }
     })
 
-    //Restaurants btn scroll
+    //Restaurants Button Scroll Listener
     document.addEventListener('DOMContentLoaded', () => {
         const scrollRestaurantsBtn = document.getElementById('scroll-btn');
+        const bookNowBtn = document.getElementById('book-now-btn')
         const restaurantsSection = document.getElementById('scroll-target')
         scrollRestaurantsBtn.addEventListener('click', () => restaurantsSection.scrollIntoView({ behavior: 'smooth' }));
+        bookNowBtn.addEventListener('click', () => restaurantsSection.scrollIntoView({ behavior: 'smooth' }));
     })
 
     //Saving Restaurant name when clicking on cards and redirecting to restaurant page
-    for (let i = 0; i < restaurantsCards.length; i++) {
-        restaurantsCards[i].addEventListener('click', () => {
-            const cardTextElement = restaurantsCards[i].querySelector('.card-text');
+    for (let i = 0; i < restaurantsCardsText.length; i++) {
+        restaurantsCardsText[i].addEventListener('click', () => {
+            const cardTextContent = restaurantsCardsText[i].textContent;
+            console.log(cardTextContent)
 
-            if (cardTextElement) {
-                const restaurantName = cardTextElement.textContent.split(' - ')[0];
+            if (cardTextContent) {
+                const restaurantName = cardTextContent.split(' - ')[0];
                 localStorage.setItem('selectedRestaurant', JSON.stringify(restaurantName));
                 window.location.href = '/pages/restaurant.html';
             }
         })
     }
 
-    //Profile button redirects to specific profile
+    //Profile Redirection
     const profileBtns = [
         navbarProfileLink,
         navbarProfileLinkCollapsed
