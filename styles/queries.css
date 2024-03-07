@@ -37,6 +37,15 @@
     .explore-container-search {
         width: 80%;
     }
+
+    .empty-col {
+        display: none;
+    }
+
+    .empty-col-2 {
+        display: block;
+    }
+
 }
 
 @media screen and (max-width:850px) {

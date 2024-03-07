@@ -302,6 +302,10 @@ footer {
     font-weight: 300;
 }
 
+.empty-col-2 {
+    display: none;
+}
+
 .hidden {
     display: none;
 }
