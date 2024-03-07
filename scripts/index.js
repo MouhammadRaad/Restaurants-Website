@@ -414,8 +414,10 @@ if (document.title === 'Restaurants Website') {
     //Restaurants Button Scroll Listener
     document.addEventListener('DOMContentLoaded', () => {
         const scrollRestaurantsBtn = document.getElementById('scroll-btn');
+        const bookNowBtn = document.getElementById('book-now-btn')
         const restaurantsSection = document.getElementById('scroll-target')
         scrollRestaurantsBtn.addEventListener('click', () => restaurantsSection.scrollIntoView({ behavior: 'smooth' }));
+        bookNowBtn.addEventListener('click', () => restaurantsSection.scrollIntoView({ behavior: 'smooth' }));
     })
 
     //Saving Restaurant name when clicking on cards and redirecting to restaurant page
